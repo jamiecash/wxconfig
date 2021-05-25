@@ -2,14 +2,14 @@ from distutils.core import setup
 setup(
   name='wxconfig',
   packages=['wxconfig'],
-  version='0.1',
+  version='v0.1',
   license='MIT',
   description='A package for managing application config through yaml files. Provides dynamically generated wxpython '
               'dialog.',
   author='Jamie Cash',
   author_email='jlcash@gmail.com',
   url='https://github.com/jamiecash/wxconfig',
-  download_url='https://github.com/jamiecash/wxconfig/archive/v_01.tar.gz',
+  download_url='https://github.com/jamiecash/wxconfig/archive/refs/tags/v0.1.tar.gz',
   keywords=['CONFIG', 'SETTINGS', 'WXPYTHON', 'WX'],
   install_requires=[
       'wxpython',
