@@ -3,4 +3,3 @@ requires = [
     "wxpython>=4.1.1",
     "pyyaml>=5.4.1"
 ]
-build-backend = "setuptools.build_meta"
