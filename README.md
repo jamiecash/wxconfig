@@ -18,6 +18,7 @@ app_function_1:
 ```
 
 2) If you require your settings dialog to contain nicely formatted labels and tooltips, define these in a separate yaml file:
+
 #####[configmeta.yaml]
 ```yaml
 app_function_1:
@@ -82,6 +83,7 @@ if res == wx.ID_OK:
 ```
 
 7) If you would like the settings dialogs position, size and style to be restored the next time the user opens it, then this can be stored in the config file. Create a config section named settings_window with the initial values. These will be changed if the user repositions or resizes the settings dialog. Keep the style value as is or change to a different wxpython window style:
+
 #####[config.yaml]
 ```yaml
 settings_window:
