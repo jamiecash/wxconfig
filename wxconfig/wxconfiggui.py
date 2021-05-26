@@ -23,7 +23,8 @@ class SettingsDialog(wx.Dialog):
         """
 
         # Super Constructor
-        wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title="Settings")
+        wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title="Settings",
+                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
         # Get the dialog size, position and style from settings if set
         x = Config().get('settings_window.x')
@@ -40,6 +41,9 @@ class SettingsDialog(wx.Dialog):
             self.SetPosition(point)
         if size is not None:
             self.SetSize(size)
+
+        # Override style if it is available in config. Default has already been set as
+        # wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BOARDER
         if style is not None:
             self.SetWindowStyle(style)
 
@@ -51,9 +55,6 @@ class SettingsDialog(wx.Dialog):
 
         # Dict of changes. Will commit only on ok
         self.__changes = {}
-
-        # Dialog should be resizable
-        self.SetWindowStyle(wx.RESIZE_BORDER)
 
         # Settings to exclude. Just settings_window if None. Add settings_window if not specified.
         exclude = ['settings_window'] if exclude is None else exclude
@@ -92,7 +93,7 @@ class SettingsDialog(wx.Dialog):
         main_sizer.Add(button_sizer)
         self.SetSizer(main_sizer)
 
-        # Bind buttons &  notebook page select.
+        # Bind buttons & notebook page select.
         button_ok.Bind(wx.EVT_BUTTON, self.__on_ok)
         button_cancel.Bind(wx.EVT_BUTTON, self.__on_cancel)
         self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.__on_page_select)
@@ -162,6 +163,9 @@ class SettingsDialog(wx.Dialog):
 
         # Save
         self.__settings.save()
+
+        # Destroy
+        self.Destroy()
 
 
 class SettingsTab(wx.Panel):
