@@ -271,6 +271,7 @@ class SettingsTree(wx.TreeCtrl):
     """
 
     __root_node_name = None
+    __helptext = {}
 
     def __init__(self, settings_tab, settings_node):
         """
@@ -285,11 +286,9 @@ class SettingsTree(wx.TreeCtrl):
         # Set root node
         self.__root_node_name = settings_node
 
-        # Build the tree
+        # Build the tree. Bind the
         self.__build_tree(None, self.__root_node_name)
-
-        # Expand it
-        # self.ExpandAll()
+        self.Bind(wx.EVT_TREE_ITEM_GETTOOLTIP, self.__display_tooltip)
 
         # Set max size. Width should be best size width, height should be auto (-1)
         best_width = self.GetBestSize()[0] * 2  # Hack, best size not working
@@ -319,12 +318,32 @@ class SettingsTree(wx.TreeCtrl):
             # Get value. If dict, add the node and recursively call this function again.
             value = settings[setting]
             if type(value) is dict:
+                # Get metadata for branch if available
+                branch_name = Config().get_meta(settings_path, '__label')
+                branch_helptext = Config().get_meta(settings_path, '__helptext')
+
                 # Add the node and set its settings path
-                node_id = self.AppendItem(node, setting)
+                node_id = self.AppendItem(node, setting if branch_name is None else branch_name)
                 self.SetItemData(node_id, settings_path)
+
+                # If there is helptext for the branch, store it against node_id. We will use it in get tool tip event
+                # handler.
+                if branch_helptext is not None:
+                    self.__helptext[node_id] = branch_helptext
 
                 # Recurse
                 self.__build_tree(node_id, value)
+
+    def __display_tooltip(self, event):
+        """
+        Displays sets teh tooltip for the tree item
+        :return:
+        """
+        item = event.GetItem()
+
+        if item in self.__helptext:
+            helptext = self.__helptext[item]
+            event.SetToolTip(helptext)
 
 
 class SettingsValuePanel(wx.ScrolledWindow):

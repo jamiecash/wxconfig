@@ -63,8 +63,6 @@ class Config(object):
             if last is None:
                 if element in self.__config:
                     last = self.__config[element]
-                else:
-                    last = None
             else:
                 if element in last:
                     last = last[element]
@@ -121,8 +119,6 @@ class Config(object):
                 if last is None:
                     if element in self.__meta:
                         last = self.__meta[element]
-                    else:
-                        last = None
                 else:
                     if element in last:
                         last = last[element]

@@ -48,14 +48,28 @@ class TestConfig(unittest.TestCase):
         config = cgf.Config()
         config.load("testconfig.yaml", meta='testconfigmeta.yaml')
 
-        # There should be a label and help text defined for val_1_1_1
+        # There should be a label and help text defined for leaf node val_1_1_1
         label = config.get_meta('test1.test1_1.val1_1_1', '__label')
         helptext = config.get_meta('test1.test1_1.val1_1_1', '__helptext')
 
         self.assertEqual(label, 'val 1.1.1')
-        self.assertEqual(helptext, 'Value 1.1.1')
+        self.assertEqual(helptext, 'Value 1.1.1 Leaf')
 
-        # There shouldn't be one for val_2_1_1. These should be None
+        # There should be a label and help text for branch node test1_1
+        label = config.get_meta('test1.test1_1', '__label')
+        helptext = config.get_meta('test1.test1_1', '__helptext')
+
+        self.assertEqual(label, 'Test 1.1')
+        self.assertEqual(helptext, 'Test 1.1 Branch')
+
+        # There shouldn't be a label or helptext for branch Test 1.2. These should return None
+        label = config.get_meta('test1.test1_2', '__label')
+        helptext = config.get_meta('test1.test1_2', '__helptext')
+
+        self.assertTrue(label is None)
+        self.assertTrue(helptext is None)
+
+        # There shouldn't be label or helptext for leaf val_2_1_1. These should return None
         label = config.get_meta('test1.test2_1.val2_1_1', '__label')
         helptext = config.get_meta('test1.test2_1.val2_1_1', '__helptext')
 
