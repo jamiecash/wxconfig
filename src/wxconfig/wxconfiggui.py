@@ -1,6 +1,6 @@
 import wx
 import logging
-from wxconfig.config import Config
+from wxconfig import Config
 
 
 class SettingsDialog(wx.Dialog):
@@ -435,3 +435,25 @@ class SettingsValuePanel(wx.ScrolledWindow):
                              f"for {setting_path}.")
 
         return on_value_changed
+
+
+if __name__ == '__main__':
+    """
+    Displays the wxconfig dialog using the text config files. Useful for testing the GUI.
+    """
+    import definitions
+
+    # Load the config
+    Config().load(fr"{definitions.TEST_DIR}\testconfig.yaml",
+                      meta=fr"{definitions.TEST_DIR}\testconfigmeta.yaml")
+
+    # Create the app and frame
+    app = wx.App(False)
+    frame = wx.Frame()
+    frame.Show()
+    app.MainLoop()
+
+    # Display the dialog
+    settings_dialog = SettingsDialog(parent=None, exclude=[])
+    res = settings_dialog.ShowModal()
+
