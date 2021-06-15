@@ -35,7 +35,7 @@ app_function_1:
 
 ```python
 
-from src import wxconfig as cfg
+import wxconfig as cfg
 
 cfg.Config().load("config.yaml", meta="configmeta.yaml")
 ```
@@ -44,7 +44,7 @@ cfg.Config().load("config.yaml", meta="configmeta.yaml")
 
 ```python
 
-from src import wxconfig as cfg
+import wxconfig as cfg
 
 # Get a config value
 conf_val = cfg.Config().get('app_function_1.setting_theme_1.setting_1')
@@ -57,7 +57,7 @@ cfg.Config().set('app_function_1.setting_theme_1.setting_1', 'A new text value')
 
 ```python
 
-from src import wxconfig as cfg
+import wxconfig as cfg
 
 cfg.Config().save()
 ```
@@ -66,7 +66,7 @@ cfg.Config().save()
 
 ```python
 
-from src import wxconfig as cfg
+import wxconfig as cfg
 
 # Display the dialog. Exclude all settings under setting_theme_2
 settings_dialog = cfg.SettingsDialog(parent=None, exclude=['setting_theme_2'])
@@ -77,7 +77,7 @@ res = settings_dialog.ShowModal()
 
 ```python
 import wx
-from src import wxconfig as cfg
+import wxconfig as cfg
 
 # Display the dialog. Exclude all settings under setting_theme_2
 settings_dialog = cfg.SettingsDialog(parent=None, exclude=['setting_theme_2'])
